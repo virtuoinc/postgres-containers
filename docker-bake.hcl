@@ -7,7 +7,7 @@ variable "environment" {
 }
 
 variable "registry" {
-  default = "localhost:5000"
+  default = "ghcr.io/virtuoinc"
 }
 
 // Use the revision variable to identify the commit that generated the image
@@ -15,19 +15,19 @@ variable "revision" {
   default = ""
 }
 
-fullname = ( environment == "testing") ? "${registry}/postgresql-testing" : "${registry}/postgresql"
+fullname = "${registry}/cnpg"
 now = timestamp()
 authors = "The CloudNativePG Contributors"
 url = "https://github.com/cloudnative-pg/postgres-containers"
 
 // PostgreSQL versions to build
 postgreSQLVersions = [
-  "13.22",
-  "14.19",
-  "15.14",
+  # "13.22",
+  # "14.19",
+  # "15.14",
   "16.10",
-  "17.6",
-  "18.0"
+  # "17.6",
+  # "18.0"
 ]
 
 // PostgreSQL preview versions to build, such as "18~beta1" or "18~rc1"
@@ -44,7 +44,9 @@ barmanVersion = "3.16.1"
 extensions = [
   "pgaudit",
   "pgvector",
-  "pg-failover-slots"
+  "pg-failover-slots",
+  "pglogical",
+  "postgis",
 ]
 
 target "default" {
@@ -58,9 +60,9 @@ target "default" {
     pgVersion = getPgVersions(postgreSQLVersions, postgreSQLPreviewVersions)
     base = [
       // renovate: datasource=docker versioning=loose
-      "debian:trixie-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb",
+      # "debian:trixie-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb",
       // renovate: datasource=docker versioning=loose
-      "debian:bookworm-slim@sha256:7e490910eea2861b9664577a96b54ce68ea3e02ce7f51d89cb0103a6f9c386e0",
+      # "debian:bookworm-slim@sha256:7e490910eea2861b9664577a96b54ce68ea3e02ce7f51d89cb0103a6f9c386e0",
       // renovate: datasource=docker versioning=loose
       "debian:bullseye-slim@sha256:f807f4b16002c623115b0247dca6a55711c6b1ae821dc64fb8a2339e4ce2115d"
     ]
