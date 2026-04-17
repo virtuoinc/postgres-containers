@@ -22,12 +22,11 @@ url = "https://github.com/cloudnative-pg/postgres-containers"
 
 // PostgreSQL versions to build
 postgreSQLVersions = [
-  # "13.22",
-  # "14.19",
-  # "15.14",
-  "16.10",
-  # "17.6",
-  # "18.0"
+  "14.22",
+  "15.17",
+  "16.13",
+  "17.9",
+  "18.3"
 ]
 
 // PostgreSQL preview versions to build, such as "18~beta1" or "18~rc1"
@@ -38,7 +37,7 @@ postgreSQLPreviewVersions = [
 
 // Barman version to build
 // renovate: datasource=pypi versioning=loose depName=barman
-barmanVersion = "3.16.1"
+barmanVersion = "3.17.0"
 
 // Extensions to be included in the `standard` image
 extensions = [
@@ -60,11 +59,11 @@ target "default" {
     pgVersion = getPgVersions(postgreSQLVersions, postgreSQLPreviewVersions)
     base = [
       // renovate: datasource=docker versioning=loose
-      # "debian:trixie-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb",
+      "debian:trixie-slim@sha256:1d3c811171a08a5adaa4a163fbafd96b61b87aa871bbc7aa15431ac275d3d430",
       // renovate: datasource=docker versioning=loose
-      # "debian:bookworm-slim@sha256:7e490910eea2861b9664577a96b54ce68ea3e02ce7f51d89cb0103a6f9c386e0",
+      "debian:bookworm-slim@sha256:74d56e3931e0d5a1dd51f8c8a2466d21de84a271cd3b5a733b803aa91abf4421",
       // renovate: datasource=docker versioning=loose
-      "debian:bullseye-slim@sha256:f807f4b16002c623115b0247dca6a55711c6b1ae821dc64fb8a2339e4ce2115d"
+      "debian:bullseye-slim@sha256:4333240150a6924f878e05ec2c998aec95238010e0e4d2fec6161c90128c4652"
     ]
   }
   platforms = [

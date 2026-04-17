@@ -1,4 +1,4 @@
-ARG BASE=debian:12.11-slim
+ARG BASE=debian:trixie-slim@sha256:9b6ccd28f4913155f35e10ecd4437347d86ebce4ecf5853b3568141468faec56
 FROM $BASE AS minimal
 
 ARG PG_VERSION
@@ -48,6 +48,7 @@ RUN apt-get update && \
 		python3-setuptools \
 	&& \
 	pip3 install --no-cache-dir barman[cloud,azure,snappy,google,zstandard,lz4]==${BARMAN_VERSION} && \
+	python3 -c "import sysconfig, compileall; compileall.compile_dir(sysconfig.get_path('stdlib'), quiet=1); compileall.compile_dir(sysconfig.get_path('purelib'), quiet=1); compileall.compile_dir(sysconfig.get_path('platlib'), quiet=1)" && \
 	apt-get remove -y --purge --autoremove build-essential python3-dev && \
 	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
 	rm -rf /var/lib/apt/lists/* /var/cache/* /var/log/*
